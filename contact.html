@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Recipe Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .navbar {
+            background: #ff6600;
+            padding: 15px;
+            text-align: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .contact-form button:hover {
+            background: #e65c00;
+        }
+        .socials {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .socials a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #ff6600;
+            font-weight: bold;
+        }
+        .faq {
+            margin-top: 20px;
+        }
+        .faq h3 {
+            cursor: pointer;
+            color: #ff6600;
+        }
+        .faq p {
+            display: none;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form class="contact-form"  name="submit-to-google-sheet"onsubmit="return submitForm(event)">
+            <input type="text" id="name" name="Name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <textarea id="message" rows="5" name="message"placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <div class="socials">
+            <h3>Follow Us</h3>
+            <a href="#">Instagram</a> | 
+            <a href="#">Facebook</a> | 
+            <a href="#">Twitter</a>
+        </div>
+        <div class="faq">
+            <h3 onclick="toggleFAQ(1)">How can I find a recipe?</h3>
+            <p id="faq1">Use the search bar to enter ingredients or dish names to find recipes.</p>
+            <h3 onclick="toggleFAQ(2)">How do I save favorite recipes?</h3>
+            <p id="faq2">Click the heart icon on a recipe to add it to your favorites.</p>
+        </div>
+    </div>
+    
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyZDEkb75AvN4CnGaRDAaEp4MnRJ2SyRhUS-RcB0fStnKKRBoqgfRYXl-YcnJDn1mtv-Q/exec'
+            const form = document.forms['submit-to-google-sheet']
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => console.log('Success!', response))
+                .catch(error => console.error('Error!', error.message))
+            })
+    </script>
+</body>
+</html>

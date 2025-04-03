@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Recipes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="favorite.css"> 
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1>My Favorite Recipes ❤️</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="favorites.html" class="active">Favorites</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="search-box">
+            <input type="text" id="searchFavorites" placeholder="Search your favorites...">
+            <button onclick="filterFavorites()">🔍</button>
+        </div>
+
+        <section id="favorites-container">
+            <p class="no-favorites-message">No favorite recipes added yet! Start exploring.</p>
+        </section>
+
+        <button id="clearFavorites" onclick="clearFavorites()">Clear All Favorites</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Cooking Matters Recipe Finder</p>
+    </footer>
+
+    <script src="script.js">// Function to filter favorite recipes based on search input
+        function filterFavorites() {
+            let searchQuery = document.getElementById("searchFavorites").value.toLowerCase();
+            let cards = document.querySelectorAll(".recipe-card");
+        
+            let anyVisible = false; // Track if any recipe matches
+        
+            cards.forEach(card => {
+                let recipeName = card.querySelector("h3").textContent.toLowerCase();
+                if (recipeName.includes(searchQuery)) {
+                    card.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        
+            // Show message if no matches are found
+            let noResultsMessage = document.querySelector(".no-favorites-message");
+            if (!anyVisible) {
+                if (!noResultsMessage) {
+                    let message = document.createElement("p");
+                    message.classList.add("no-favorites-message");
+                    message.textContent = "No matching recipes found.";
+                    document.getElementById("favorites-container").appendChild(message);
+                }
+            } else {
+                if (noResultsMessage) {
+                    noResultsMessage.remove();
+                }
+            }
+        }
+        
+        // Attach event listener to run filter as user types
+        document.getElementById("searchFavorites").addEventListener("input", filterFavorites);
+        
+        </script>
+    <script>
+        loadFavorites();
+    </script>
+</body>
+</html>
